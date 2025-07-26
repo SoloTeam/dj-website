@@ -10,4 +10,7 @@ cd /opt/dj-website
 git clone https://github.com/SoloTeam/dj-website.git .
 
 cd app
+# Modify app.py to bind to all interfaces on port 5000
+# sed -i 's/app.run(/app.run(host="0.0.0.0", /' app.py
+
 nohup python3 app.py > /var/log/flask.log 2>&1 &
