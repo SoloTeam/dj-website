@@ -1,4 +1,8 @@
 #! /bin/bash
+#log() {
+#  echo "$(date '+%Y-%m-%d %H:%M:%S') — $1" >> /var/log/startup-script.log
+#}
+
 {
 echo "===== STARTUP SCRIPT BEGIN ====="
 sudo apt-get update
@@ -16,7 +20,7 @@ REPO_DIR="/opt/dj-website"
 REPO_URL="https://github.com/SoloTeam/dj-website.git"
 
 # Fix to always clone files from repo
-rm -rf "$REPO_DIR"
+rm -rf "$REPO_DIR" # not required if VM recreated with TF
 mkdir -p "$REPO_DIR"
 git clone "$REPO_URL" "$REPO_DIR"
 
@@ -31,9 +35,7 @@ git clone "$REPO_URL" "$REPO_DIR"
 echo "Installing Python packages..."
 cd "$REPO_DIR"
 sudo pip3 install -r requirements.txt
-
 #sudo pip3 install flask flask-limiter
-#pip3 install -r requirements.txt
 
  # Run the Flask app
 echo "Running Flask app..."
