@@ -15,26 +15,21 @@ echo "Cloning repo..."
 REPO_DIR="/opt/dj-website"
 REPO_URL="https://github.com/SoloTeam/dj-website.git"
 
+# Fix to always clone files from repo
+rm -rf "$REPO_DIR"
 mkdir -p "$REPO_DIR"
-cd "$REPO_DIR"
+git clone "$REPO_URL" "$REPO_DIR"
 
-
-# Avoid failing if already cloned (e.g. on redeploy)
+# Avoid failing if dir already exists
 #if [ ! -d ".git" ]; then
-#  git clone https://github.com/SoloTeam/dj-website.git .
+#  git clone "$REPO_URL" .
 #else
 #  echo "Repo already exists. Skipping clone."
 #fi
 
-# Avoid re-cloning if already exists
-if [ ! -d ".git" ]; then
-  git clone "$REPO_URL" .
-else
-  echo "Repo already exists. Skipping clone."
-fi
-
 # Install Python package
 echo "Installing Python packages..."
+cd "$REPO_DIR"
 sudo pip3 install -r requirements.txt
 
 #sudo pip3 install flask flask-limiter
@@ -42,7 +37,7 @@ sudo pip3 install -r requirements.txt
 
  # Run the Flask app
 echo "Running Flask app..."
-cd app
+cd "$REPO_DIR/app"
 nohup python3 app.py > /var/log/flask.log 2>&1 &
 
 echo "===== STARTUP SCRIPT DONE ====="
