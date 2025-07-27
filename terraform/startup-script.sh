@@ -19,6 +19,7 @@ echo "Cloning repo..."
 REPO_DIR="/opt/dj-website"
 REPO_URL="https://github.com/SoloTeam/dj-website.git"
 
+
 # Fix to always clone files from repo
 rm -rf "$REPO_DIR" # not required if VM recreated with TF
 mkdir -p "$REPO_DIR"
@@ -36,6 +37,14 @@ echo "Installing Python packages..."
 cd "$REPO_DIR"
 sudo pip3 install -r requirements.txt
 #sudo pip3 install flask flask-limiter
+
+# GET THE PORT FROM VM METADATA
+echo "Fetching port from VM metadata..."
+PORT=$(curl -s -H "Metadata-Flavor: Google" \
+  http://metadata.google.internal/computeMetadata/v1/instance/attributes/port)
+
+echo "PORT=$PORT"
+
 
  # Run the Flask app
 echo "Running Flask app..."

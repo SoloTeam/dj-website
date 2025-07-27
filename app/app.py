@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+import sys
 
 # Create the Flask web application
 app = Flask(__name__)
@@ -21,6 +22,8 @@ def home():
         <p>More beats, mixes, and good vibes coming soon!</p>
     '''
 
-# Run the app on localhost with debug mode
+# Run the app with the port passed from startup-script.sh
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",debug=True,use_reloader=False)
+    # Get the port from command-line argument, or default to 5000
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 5000
+    app.run(host="0.0.0.0", port=port, debug=True, use_reloader=False)

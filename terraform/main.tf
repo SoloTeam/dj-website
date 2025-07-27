@@ -19,9 +19,11 @@ resource "google_compute_instance" "default" {
     network       = "default"
     access_config {}  # Needed for external IP
   }
-
-  metadata_startup_script = file("startup-script.sh")
-
+    metadata = {
+      port = var.flask_port
+      startup-script = file("startup-script.sh")
+    }
+  
   tags = ["http-server"]
 }
 
@@ -31,7 +33,7 @@ resource "google_compute_firewall" "allow_http" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80","5000"]
+    ports    = [var.flask_port]
   }
   
   direction = "INGRESS"
