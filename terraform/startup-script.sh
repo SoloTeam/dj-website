@@ -44,6 +44,6 @@ sudo pip3 install -r requirements.txt
 echo "Running Flask app..."
 cd app
 nohup python3 app.py > /var/log/flask.log 2>&1 &
-echo "===== STARTUP SCRIPT DONE ====="
 
+echo "===== STARTUP SCRIPT DONE ====="
 } >> /var/log/startup-script.log 2>&1
