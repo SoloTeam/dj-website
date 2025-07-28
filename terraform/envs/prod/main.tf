@@ -29,7 +29,7 @@ resource "google_compute_instance" "default" {
   lifecycle {
     replace_triggered_by = [
       null_resource.flask_port_change,
-      local.startup_script_hash
+      null_resource.startup_script_change
     ]
   }
 }
