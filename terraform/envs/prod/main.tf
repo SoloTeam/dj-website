@@ -25,6 +25,11 @@ resource "google_compute_instance" "default" {
     }
   
   tags = ["http-server"]
+  
+    lifecycle {
+    recreate_on_change = true
+  }
+  
 }
 
 resource "google_compute_firewall" "allow_http" {
