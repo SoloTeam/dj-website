@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./terraform
+        working-directory: ./terraform/envs/prod
 
     env:
       TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
