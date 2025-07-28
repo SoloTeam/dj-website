@@ -27,9 +27,9 @@ resource "google_compute_instance" "default" {
   tags = ["http-server"]
   
     lifecycle {
-    recreate_on_change = true
+    replace_triggered_by = true
   }
-  
+
 }
 
 resource "google_compute_firewall" "allow_http" {
@@ -44,5 +44,5 @@ resource "google_compute_firewall" "allow_http" {
   direction = "INGRESS"
   source_ranges = ["0.0.0.0/0"]
   target_tags = ["http-server"]
-  description = "Allow inbound HTTP on ports 80 and 5000"
+  description = "Allow inbound HTTP on the ${var.flask_port}"
 }
