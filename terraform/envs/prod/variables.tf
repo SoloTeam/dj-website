@@ -15,5 +15,5 @@ variable "zone" {
 variable "flask_port" {
   description = "Port the Flask app listens on"
   type        = number
-  default     = 5001 # Default for FLASK, can be overwritten from .tfvars
+  default     = 5003 # Default for FLASK, can be overwritten from .tfvars
 }
