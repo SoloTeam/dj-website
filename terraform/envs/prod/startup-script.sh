@@ -3,13 +3,6 @@
 #  echo "$(date '+%Y-%m-%d %H:%M:%S') — $1" >> /var/log/startup-script.log
 #}
 
-# GET THE PORT FROM VM METADATA
-echo "Fetching port from VM metadata..."
-PORT=$(curl -s -H "Metadata-Flavor: Google" \
-  http://metadata.google.internal/computeMetadata/v1/instance/attributes/port)
-
-echo "PORT=$PORT"
-
 {
 echo "===== STARTUP SCRIPT BEGIN ====="
 sudo apt-get update
@@ -44,6 +37,13 @@ echo "Installing Python packages..."
 cd "$REPO_DIR"
 sudo pip3 install -r requirements.txt
 #sudo pip3 install flask flask-limiter
+
+# GET THE PORT FROM VM METADATA
+echo "Fetching port from VM metadata..."
+PORT=$(curl -s -H "Metadata-Flavor: Google" \
+  http://metadata.google.internal/computeMetadata/v1/instance/attributes/port)
+
+echo "PORT=$PORT"
 
  # Run the Flask app
 echo "Running Flask app..."
