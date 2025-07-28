@@ -4,6 +4,12 @@ provider "google" {
   zone    = var.zone
 }
 
+   resource "null_resource" "flask_port_change" {
+   triggers = {
+     port = var.flask_port
+   }
+ }
+ 
 resource "google_compute_instance" "default" {
   name         = "dj-website-vm"
   machine_type = "e2-micro"
@@ -33,11 +39,7 @@ resource "google_compute_instance" "default" {
     ]
   }
 */
-   resource "null_resource" "flask_port_change" {
-   triggers = {
-     port = var.flask_port
-   }
- }
+
    lifecycle {
     replace_triggered_by = [null_resource.flask_port_change]
   }
