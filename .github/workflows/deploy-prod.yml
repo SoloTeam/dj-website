@@ -2,9 +2,12 @@ name: Terraform Deploy to Prod
 
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch
+
+#on:
+#  push:
+#    branches:
+#      - main
 
 jobs:
   deploy:
