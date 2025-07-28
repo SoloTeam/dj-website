@@ -26,10 +26,9 @@ resource "google_compute_instance" "default" {
   
   tags = ["http-server"]
   
- lifecycle {
+  lifecycle {
     replace_triggered_by = [
-      var.flask_port,
-      # This is the trick: this local is tracked
+      null_resource.flask_port_change,
       local.startup_script_hash
     ]
   }
