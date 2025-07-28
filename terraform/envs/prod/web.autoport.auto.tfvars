@@ -1,2 +1,2 @@
 # web.autoport.tfvars
-flask_port = 5005
+flask_port = 5006
