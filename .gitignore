@@ -4,6 +4,6 @@ __pycache__/
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+*.tfvars
 # EXCEPT the one with only public data
 !web.autoport.tfvars
-*.tfvars
