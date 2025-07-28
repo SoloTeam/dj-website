@@ -26,9 +26,12 @@ resource "google_compute_instance" "default" {
   
   tags = ["http-server"]
   
-    lifecycle {
-    replace_triggered_by = true
-  }
+lifecycle {
+  replace_triggered_by = [
+    file("startup-script.sh"),
+    var.flask_port
+  ]
+}
 
 }
 
