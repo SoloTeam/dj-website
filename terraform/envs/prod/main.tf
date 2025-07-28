@@ -26,11 +26,16 @@ resource "google_compute_instance" "default" {
   
   tags = ["http-server"]
   
-  lifecycle {
+  /*lifecycle {
     replace_triggered_by = [
       null_resource.flask_port_change,
       null_resource.startup_script_change
     ]
+  }
+*/
+  resource "null_resource" "flask_port_change" {
+  triggers = {
+    port = var.flask_port
   }
 }
 
