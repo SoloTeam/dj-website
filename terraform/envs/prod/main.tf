@@ -26,13 +26,13 @@ resource "google_compute_instance" "default" {
   
   tags = ["http-server"]
   
-lifecycle {
-  replace_triggered_by = [
-    file("startup-script.sh"),
-    var.flask_port
-  ]
-}
-
+ lifecycle {
+    replace_triggered_by = [
+      var.flask_port,
+      # This is the trick: this local is tracked
+      local.startup_script_hash
+    ]
+  }
 }
 
 resource "google_compute_firewall" "allow_http" {
