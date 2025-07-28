@@ -8,7 +8,7 @@ echo "Fetching port from VM metadata..."
 PORT=$(curl -s -H "Metadata-Flavor: Google" \
   http://metadata.google.internal/computeMetadata/v1/instance/attributes/port)
 
-echo "PORT=$PORT"
+echo "PORT=$PORT" >> /var/log/startup-script.log
 
 {
 echo "===== STARTUP SCRIPT BEGIN ====="
