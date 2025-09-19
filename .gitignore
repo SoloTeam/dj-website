@@ -5,5 +5,7 @@ __pycache__/
 terraform.tfstate
 terraform.tfstate.backup
 *.tfvars
+python-scripts/*
+docker-startup-jenkins.ps1
 # EXCEPT the one with only public data
 !web.autoport.auto.tfvars
