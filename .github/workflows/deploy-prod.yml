@@ -66,3 +66,9 @@ jobs:
       - name: Terraform Apply
         #run: terraform apply -auto-approve tfplan
         run: terraform apply -auto-approve
+
+      - name: Restart Flask to pick up new metadata port
+        run: |
+          gcloud compute ssh "${{ secrets.GCP_VM_NAME }}" \
+            --zone "${{ secrets.GCP_ZONE }}" \
+            --command 'PORT=$(curl -s -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/attributes/port) && cd /opt/dj-website/app && sudo pkill -f "python3 app.py" || true; nohup python3 app.py "$PORT" > /var/log/flask.log 2>&1 &'
