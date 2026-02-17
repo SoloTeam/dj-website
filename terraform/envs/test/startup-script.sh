@@ -49,7 +49,7 @@ echo "PORT=$PORT"
  # Run the Flask app
 echo "Running Flask app..."
 cd "$REPO_DIR/app"
-#pkill -f "python3 app.py" || true
+pkill -f "python3 app.py" || true
 nohup python3 app.py "$PORT" > /var/log/flask.log 2>&1 &
 echo $! > /var/run/flask.pid
 #nohup python3 app.py > /var/log/flask.log 2>&1 &
