@@ -49,7 +49,8 @@ echo "PORT=$PORT"
  # Run the Flask app
 echo "Running Flask app..."
 cd "$REPO_DIR/app"
-nohup python3 app.py > /var/log/flask.log 2>&1 &
+nohup python3 app.py "$PORT" > /var/log/flask.log 2>&1 &
+#nohup python3 app.py > /var/log/flask.log 2>&1 &
 
 echo "===== STARTUP SCRIPT DONE ====="
 } >> /var/log/startup-script.log 2>&1
