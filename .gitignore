@@ -2,7 +2,7 @@ __pycache__/
 *.pyc
 *.log
 .terraform/
-terraform.tfstate
+terraform.tfstate # to keep it local and do not push to github, or there will be a state conflic
 terraform.tfstate.backup
 *.tfvars
 python-scripts/*

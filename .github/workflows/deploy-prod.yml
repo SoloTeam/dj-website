@@ -13,9 +13,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      id-token: write   # <-- THIS enables GitHub to mint the OIDC token
+
     defaults:
       run:
-        working-directory: ./terraform/envs/prod
+        working-directory: ./terraform/envs/test
 
     env:
       TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
@@ -27,13 +31,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Authenticate to GCP
-        uses: google-github-actions/auth@v2
+      - name: Authenticate to GCP (OIDC -> WIF)
+        uses: google-github-actions/auth@v3
         with:
-          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+          #credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          create_credentials_file: true
+          export_environment_variables: true
 
       - name: Set up gcloud CLI
-        uses: google-github-actions/setup-gcloud@v1
+        uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
@@ -44,7 +52,7 @@ jobs:
             --filter="name=${{ secrets.GCP_VM_NAME }}"
 
       - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         run: terraform init
